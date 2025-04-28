@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1>{{ itinerary.title }}</h1>
+        <a href="{{ url_for('main.place_detail', place_id=place.id) }}" class="btn btn-outline-secondary">
+            Back to Place
+        </a>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="itinerary-timeline">
+                {% for day in itinerary.days %}
+                <div class="timeline-item mb-5">
+                    <div class="timeline-badge bg-primary"></div>
+                    <div class="timeline-content p-4 shadow-sm rounded">
+                        <h3>Day {{ day.number }}: {{ day.title }}</h3>
+                        <div class="activities mt-3">
+                            {% for activity in day.activities %}
+                            <div class="activity mb-3">
+                                <h5><i class="fas fa-map-marker-alt text-primary me-2"></i>{{ activity.name }}</h5>
+                                <p class="text-muted">{{ activity.time }} | {{ activity.duration }}</p>
+                                <p>{{ activity.description }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-body">
+                    <h4 class="mb-4">Trip Summary</h4>
+                    <div class="mb-3">
+                        <h6>Destination:</h6>
+                        <p>{{ place.name }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Duration:</h6>
+                        <p>{{ itinerary.days|length }} days</p>
+                    </div>
+                    <a href="{{ url_for('main.book_place', place_id=place.id) }}" class="btn btn-primary w-100">
+                        Book This Trip
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .itinerary-timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    .timeline-item {
+        position: relative;
+    }
+    .timeline-badge {
+        position: absolute;
+        left: -15px;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #0d6efd;
+    }
+    .timeline-content {
+        position: relative;
+        background: white;
+    }
+</style>
+{% endblock %}

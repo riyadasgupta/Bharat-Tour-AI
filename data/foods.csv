@@ -1,0 +1,4 @@
+id,name,description,rating,image_url,place_id
+1,Biryani,"Fragrant rice dish cooked with spices and meat",4.5,/static/images/foods/biryani.jpg,1
+2,Dosa,"Thin crispy crepe made from fermented rice batter",4.3,/static/images/foods/dosa.jpg,2
+3,Thukpa,"Noodle soup common in Tibetan cuisine",4.2,/static/images/foods/thukpa.jpg,3

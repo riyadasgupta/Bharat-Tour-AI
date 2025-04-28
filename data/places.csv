@@ -1,0 +1,4 @@
+id,name,state,description,category,rating,image_url,latitude,longitude
+1,Taj Mahal,Uttar Pradesh,"The Taj Mahal is an ivory-white marble mausoleum on the south bank of the Yamuna river in the Indian city of Agra.",Heritage,4.8,/static/images/places/taj-mahal.jpg,27.1751,78.0421
+2,Kerala Backwaters,Kerala,"The Kerala backwaters are a network of brackish lagoons and lakes lying parallel to the Arabian Sea coast.",Nature,4.6,/static/images/places/kerala-backwaters.jpg,9.4981,76.3388
+3,Leh-Ladakh,Jammu and Kashmir,"Ladakh is a region administered by India as a union territory, and constitutes a part of the larger Kashmir region.",Adventure,4.7,/static/images/places/leh-ladakh.jpg,34.1526,77.5771

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Search | Bharat Tours{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="mb-4">Explore India</h2>
+            <form class="mb-5" method="POST" action="{{ url_for('main.search') }}">
+                {{ search_form.hidden_tag() }}
+                <div class="input-group">
+                    {{ search_form.query(class="form-control form-control-lg", placeholder="Search destinations...") }}
+                    <button class="btn btn-primary btn-lg" type="submit">Search</button>
+                </div>
+            </form>
+            
+            <div class="card mb-5">
+                <div class="card-body">
+                    <h5 class="card-title">Get Personalized Recommendations</h5>
+                    <form method="POST">
+                        {{ preferences_form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ preferences_form.interests(class="form-control", placeholder="Enter your travel interests...") }}
+                        </div>
+                        {{ preferences_form.submit(class="btn btn-outline-primary") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        {% if places %}
+            {% for place in places %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{{ place.image_url or url_for('static', filename='images/places/default-place.jpg') }}" 
+                         class="card-img-top" 
+                         alt="{{ place.name }}"
+                         style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ place.name }}</h5>
+                        <p class="card-text text-muted">{{ place.state }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{{ url_for('main.place_detail', place_id=place.id) }}" class="btn btn-outline-primary w-100">Explore</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    No places found. Try a different search or preference.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

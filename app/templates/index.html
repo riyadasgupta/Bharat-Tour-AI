@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Discover Incredible India</h1>
+        <p class="subtitle">Your AI-powered travel companion</p>
+        
+        <div class="search-container">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search destinations...">
+                <button class="btn" type="button">Search</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Destinations -->
+<!-- Featured Destinations -->
+<section id="featured" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Destinations</h2>
+        <div class="row g-4">
+            <!-- Destination Card 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 destination-card">
+                    <div class="card-image" style="background-image: url('{{ url_for('static', filename='images/destinations/taj-mahal.jpeg') }}')">
+                        <div class="overlay"></div>
+                        <div class="rating-badge">
+                            <i class="fas fa-star"></i> 4.8
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Taj Mahal</h5>
+                        <p class="card-text text-muted">Agra, Uttar Pradesh</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">From ₹1,500</span>
+                            <a href="{{ url_for('main.place_detail', place_id=1) }}" class="btn btn-sm btn-outline-primary">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destination Card 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 destination-card">
+                    <div class="card-image" style="background-image: url('{{ url_for('static', filename='images/destinations/kerala-backwaters.jpeg') }}')">
+                        <div class="overlay"></div>
+                        <div class="rating-badge">
+                            <i class="fas fa-star"></i> 4.7
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Kerala Backwaters</h5>
+                        <p class="card-text text-muted">Alleppey, Kerala</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">From ₹2,300</span>
+                            <a href="{{ url_for('main.place_detail', place_id=2) }}" class="btn btn-sm btn-outline-primary">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destination Card 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 destination-card">
+                    <div class="card-image" style="background-image: url('{{ url_for('static', filename='images/destinations/leh-ladakh.jpg') }}')">
+                        <div class="overlay"></div>
+                        <div class="rating-badge">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Leh-Ladakh</h5>
+                        <p class="card-text text-muted">Jammu & Kashmir</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">From ₹3,500</span>
+                            <a href="{{ url_for('main.place_detail', place_id=3) }}" class="btn btn-sm btn-outline-primary">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View More Button -->
+        <div class="text-center mt-5">
+            <a href="{{ url_for('main.search') }}" class="btn btn-primary px-4">
+                View All Destinations <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CSS for this section -->
+<style>
+    .destination-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .destination-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    
+    .card-image {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+    
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    }
+    
+    .rating-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255,255,255,0.9);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .rating-badge i {
+        color: #ffc107;
+        margin-right: 3px;
+    }
+    
+    .price {
+        font-weight: 600;
+        color: #28a745;
+    }
+    
+    @media (max-width: 768px) {
+        .card-image {
+            height: 180px;
+        }
+    }
+</style>
+
+<!-- JavaScript for this section -->
+<script>
+    // Add animation to cards when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.destination-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        cards.forEach((card, index) => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+    });
+</script>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-5 bg-white">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2>What Our Travelers Say</h2>
+            <p class="text-muted">Hear from our happy explorers</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Testimonial 1 -->
+            <div class="col-md-4">
+                <div class="card testimonial-card h-100">
+                    <div class="card-body">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="testimonial-text">"The Kerala backwaters tour was magical! Bharat Tours made everything so easy and comfortable. The houseboat experience was unforgettable."</p>
+                        <div class="user-info d-flex align-items-center mt-4">
+                            <img src="{{ url_for('static', filename='images/testimonials/user-2.png') }}" 
+                                 class="rounded-circle me-3" 
+                                 width="60" 
+                                 alt="Priya Sharma">
+                            <div>
+                                <h6 class="mb-0">Priya Sharma</h6>
+                                <small class="text-muted">Mumbai | June 2023</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="col-md-4">
+                <div class="card testimonial-card h-100">
+                    <div class="card-body">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                        </div>
+                        <p class="testimonial-text">"Our Leh-Ladakh bike trip was perfectly organized. The guides were knowledgeable and the itinerary was packed with breathtaking views."</p>
+                        <div class="user-info d-flex align-items-center mt-4">
+                            <img src="{{ url_for('static', filename='images/testimonials/user-1.png') }}" 
+                                 class="rounded-circle me-3" 
+                                 width="60" 
+                                 alt="Rahul Mehta">
+                            <div>
+                                <h6 class="mb-0">Rahul Mehta</h6>
+                                <small class="text-muted">Delhi | August 2023</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="col-md-4">
+                <div class="card testimonial-card h-100">
+                    <div class="card-body">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                        </div>
+                        <p class="testimonial-text">"The AI recommendations matched our interests perfectly. We discovered hidden gems in Rajasthan we would have never found on our own!"</p>
+                        <div class="user-info d-flex align-items-center mt-4">
+                            <img src="{{ url_for('static', filename='images/testimonials/user-3.png') }}" 
+                                 class="rounded-circle me-3" 
+                                 width="60" 
+                                 alt="Ananya Patel">
+                            <div>
+                                <h6 class="mb-0">Ananya Patel</h6>
+                                <small class="text-muted">Bangalore | October 2023</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial Navigation -->
+        <div class="text-center mt-5">
+            <button class="btn btn-outline-primary me-2 testimonial-prev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="btn btn-outline-primary testimonial-next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</style>
+
+<!-- CSS for Testimonials -->
+<style>
+    .testimonial-card {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial-text {
+        font-style: italic;
+        position: relative;
+        padding-left: 20px;
+    }
+    
+    .testimonial-text::before {
+        content: '"';
+        position: absolute;
+        left: 0;
+        top: -10px;
+        font-size: 40px;
+        color: rgba(0,0,0,0.1);
+    }
+    
+    .rating {
+        color: #ffc107;
+    }
+    
+    .user-info img {
+        object-fit: cover;
+    }
+    
+    @media (max-width: 768px) {
+        .testimonial-card {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<!-- JavaScript for Testimonials -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simple carousel functionality
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        let currentIndex = 0;
+        
+        function showTestimonial(index) {
+            testimonials.forEach((card, i) => {
+                card.style.display = i === index ? 'block' : 'none';
+            });
+        }
+        
+        // Initialize - show all on desktop, first one on mobile
+        if (window.innerWidth < 768) {
+            showTestimonial(currentIndex);
+        }
+        
+        // Navigation buttons
+        document.querySelector('.testimonial-next').addEventListener('click', function() {
+            if (window.innerWidth >= 768) return;
+            currentIndex = (currentIndex + 1) % testimonials.length;
+            showTestimonial(currentIndex);
+        });
+        
+        document.querySelector('.testimonial-prev').addEventListener('click', function() {
+            if (window.innerWidth >= 768) return;
+            currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(currentIndex);
+        });
+        
+        // Responsive behavior
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                testimonials.forEach(card => card.style.display = 'block');
+            } else {
+                showTestimonial(currentIndex);
+            }
+        });
+        
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        testimonials.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+            observer.observe(card);
+        });
+    });
+</script>
+{% endblock %}

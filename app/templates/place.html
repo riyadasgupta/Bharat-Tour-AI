@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Main Place Info -->
+        <div class="col-lg-8">
+            <h1>{{ place.name }}</h1>
+            <div class="rating mb-4">
+                {% for _ in range(place.rating|int) %}
+                    <i class="fas fa-star text-warning"></i>
+                {% endfor %}
+            </div>
+            
+            <img src="{{ place.image_url }}" class="img-fluid rounded mb-4" alt="{{ place.name }}">
+            
+            <div class="mb-5">
+                <h3>About</h3>
+                <p>{{ place.description }}</p>
+            </div>
+            
+            <!-- Food Preview -->
+            <div class="mb-5">
+                <h3>Local Cuisine</h3>
+                <div class="row">
+                    {% for food in foods %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <img src="{{ food.image_url }}" class="card-img-top" alt="{{ food.name }}">
+                            <div class="card-body">
+                                <h5>{{ food.name }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('main.place_foods', place_id=place.id) }}" class="btn btn-outline-primary">
+                    View All Foods
+                </a>
+            </div>
+        </div>
+        
+        <!-- Booking Sidebar -->
+        <div class="col-lg-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-body">
+                    <h4>Plan Your Visit</h4>
+                    <form method="POST" action="{{ url_for('main.book_place', place_id=place.id) }}">
+                        {{ form.hidden_tag() }}
+                        <!-- Add booking form fields here -->
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Book Now</button>
+                    </form>
+                    
+                    <hr>
+                    
+                    <h5>Generate Itinerary</h5>
+                    <div class="btn-group w-100">
+                        <a href="{{ url_for('main.generate_itinerary', place_id=place.id, duration=3) }}" 
+                           class="btn btn-outline-secondary">3 Days</a>
+                        <a href="{{ url_for('main.generate_itinerary', place_id=place.id, duration=5) }}" 
+                           class="btn btn-outline-secondary">5 Days</a>
+                        <a href="{{ url_for('main.generate_itinerary', place_id=place.id, duration=7) }}" 
+                           class="btn btn-outline-secondary">7 Days</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

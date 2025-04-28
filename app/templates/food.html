@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1>{{ place.name }} Cuisine</h1>
+        <a href="{{ url_for('main.place_detail', place_id=place.id) }}" class="btn btn-outline-secondary">
+            Back to Place
+        </a>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for food in foods %}
+        <div class="col">
+            <div class="card h-100 food-card">
+                <img src="{{ food.image_url }}" class="card-img-top" alt="{{ food.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ food.name }}</h5>
+                    <div class="rating mb-2">
+                        {% for _ in range(food.rating|int) %}
+                            <i class="fas fa-star text-warning"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="card-text">{{ food.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .food-card {
+        transition: transform 0.3s;
+    }
+    .food-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
